@@ -10,4 +10,4 @@ class PermanentError(Exception):
 
 
 def fetch_product(transport, tenant, sku):
-    return transport.get(tenant=tenant, sku=sku, timeout=3.0)
+    return transport.get(tenant=tenant, sku=sku)
