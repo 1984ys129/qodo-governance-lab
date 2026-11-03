@@ -9,5 +9,5 @@ class PermanentError(Exception):
     """Retrying cannot correct this failure."""
 
 
-def fetch_product(transport, tenant, sku):
+def fetch_product(transport, sku, *, tenant):
     return transport.get(tenant=tenant, sku=sku, timeout=3.0)

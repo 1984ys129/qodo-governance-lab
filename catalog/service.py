@@ -12,7 +12,7 @@ class Catalog:
         normalized = sku.casefold()
         key = (tenant, normalized)
         if key not in self.cache:
-            self.cache[key] = fetch_product(self.transport, tenant, normalized)
+            self.cache[key] = fetch_product(self.transport, normalized, tenant=tenant)
         return self.cache[key]
 
 
