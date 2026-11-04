@@ -20,7 +20,7 @@ def list_page(items, offset, limit):
     if offset < 0 or limit <= 0:
         raise ValueError("offset must be nonnegative and limit must be positive")
     end = offset + limit
-    page = items[offset:end]
+    page = items[offset:offset + limit]
     next_offset = end if end < len(items) else None
     return page, next_offset
 
@@ -28,11 +28,11 @@ def list_page(items, offset, limit):
 def retry_call(operation, attempts=3):
     if attempts < 1:
         raise ValueError("attempts must be positive")
-    for attempt in range(attempts):
+    for attempt_index in range(attempts):
         try:
             return operation()
         except TransientError:
-            if attempt == attempts - 1:
+            if attempt_index == attempts - 1:
                 raise
 
 
@@ -43,4 +43,4 @@ def quote_total(unit_cents, quantity, discount_bps=0):
 
 
 def audit_event(logger, tenant, action, api_key):
-    logger.info("catalog_audit", tenant=tenant, action=action, credential="[redacted]")
+    logger.info("catalog_audit", tenant=tenant, action=action, credential_present=bool(api_key))
